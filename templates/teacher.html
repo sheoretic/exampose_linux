@@ -1,0 +1,153 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <meta charset="utf-8">  
+    <title>教师端</title>  
+    <link rel="stylesheet"type="text/css"href="css/teacher.css"/>  
+    <style>  
+        /* 重置默认边距和填充 */
+         * {
+            margin: 0;
+            padding: 0;
+        }
+        .log img{
+				width: 200px;
+			}
+			.log {
+				display: flex; /* 使用flex布局 */
+				align-items: center; /* 垂直居中对齐 */
+				justify-content: center; /* 水平居中对齐 */
+				gap: 400px; /* 图片和文字之间的间距 */
+			}
+			p {
+				font-size: 15px; /* 默认字体大小 */
+			}
+        /* 容器样式，用于包含浮动元素 */
+        .container {
+            display: flex; /* 使用Flexbox布局 */
+            justify-content: center; /* 水平居中对齐 */
+            align-items: center; /* 垂直居中对齐 */
+            height: 80vh; /* 使容器占满整个视口高度 */
+            padding: 5px; /* 增加容器内边距 */
+            gap: 5px; /* 图片和表单之间的间距 */
+        }
+        /* 图片容器样式 */
+        .pic {
+            flex: 1; /* 图片容器占用剩余空间 */
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            max-width: 50%; /* 最大宽度为50% */
+        }
+        /* 图片样式 */
+        .pic img {
+            max-width: 100%; /* 使图片宽度填满容器 */
+            height: auto; /* 保持图片比例 */
+        }
+        /* 表单容器样式 */
+        #more {
+            flex: 0; /* 表单容器占用剩余空间 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 50%;
+        }
+        /* 表格样式 */
+        #more table {
+            width: 100%; /* 表格宽度填满容器 */
+            border-collapse: collapse; /* 合并表格边框 */
+        }
+        /* 表格单元格样式 */
+        .cell1 {
+            text-align: center;
+            padding-right: 20px;
+        }
+        .cell2 {
+            width: 220px;
+            height: 26px;
+            border: 1px solid gray;
+            border-radius: 6px;
+            box-sizing: border-box; /* 包括内边距和边框在内 */
+            padding: 5px; /* 内边距 */
+        }
+        .cell3 {
+            width: 200px;
+            height: 40px;
+            background-color: aqua;
+            border: 1px solid aqua;
+            border-radius: 20px;
+            margin: 8px; /* 增加按钮之间的间距 */
+        }
+        /* 段落样式，注意这里应该使用类选择器而不是元素选择器，因为 <p> 标签在 <table> 中不是有效的位置 */
+        .table-title {
+            text-align: center;
+            margin-bottom: 10px; /* 增加与表格之间的间距 */
+        }
+    </style> 
+    <script>
+        function callPythonFunction2() {
+            // 获取考试选择的考次，对应不同的指导老师
+            var selectedValue = document.querySelector('.cell2').value;
+            // 创建要传递的数据对象
+            var dataToSend = {
+                selected_value: selectedValue
+            };
+            fetch('/call_python_function2', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dataToSend) // 传递给Python函数的数据
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert('请在windows系统教师端执行此操作！');
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        document.addEventListener('DOMContentLoaded', function() { 
+            // 为“cell3”按钮添加点击事件监听器
+            document.querySelector('.cell3').addEventListener('click', callPythonFunction2);  
+        });
+    </script>
+</head>  
+<body>  
+    <div class="log">
+    <img src="static/nobg_logo.png">
+    <p>赛道：广和通5G AIoT<br>@我来结束这个乐队</p>
+    </div>
+    <div class="container">  
+        <div class="pic">  
+            <img src="static/ima6.jpg" alter=示例图片/>
+        </div>  
+        <div id="more">  
+            <p class="table-title">七牛云连接</p>  
+            <form>  
+                <table>  
+                    <tr>  
+                        <td class="cell1">ID</td>  
+                        <td><select class="cell2">
+                            <option value="" disabled selected>请选择</option>
+                            <option value="1">教职工00001-张三</option>
+                            <option value="2">教职工00002-李四</option>
+                            <option value="3">教职工00003-王五</option>
+                        </select></td>
+                    </tr>  
+                    <tr>  
+                        <td class="cell1">Password</td>  
+                        <td><input class="cell2" type="password" placeholder="请输入密码"/></td>  
+                    </tr>  
+                    <tr>  
+                        <td colspan="2" style="text-align: center;">  
+                            <input class="cell3" type="button" value="确定"/>  
+                            <input class="cell3" type="button" value="连接"/>  
+                        </td>  
+                    </tr>  
+                </table>  
+            </form>  
+        <div>
+    </div>  
+</body>  
+</html>

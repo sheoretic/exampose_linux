@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>基于SC171 V2的实时监考系统</title>
+		<link rel="stylesheet"type="text/css"href="css/main page.css"/>
+		<style>
+			.log img{
+				width: 200px;
+			}
+			.log {
+				display: flex; /* 使用flex布局 */
+				align-items: center; /* 垂直居中对齐 */
+				justify-content: center; /* 水平居中对齐 */
+				gap: 400px; /* 图片和文字之间的间距 */
+			}
+			p {
+				font-size: 15px; /* 默认字体大小 */
+			}
+			.banner img{
+				width: 1050px;
+			}
+			.nav {
+				position: relative; /* 为了使用绝对定位的伪元素 */
+				text-align: center; /* 使内部的 inline-block 元素居中 */
+				margin: 0 auto; /* 将 nav 容器本身居中 */
+				z-index: 1; /* 确保 nav 元素在伪元素之上 */
+			}
+			.nav li a {
+				font-size: 18px; /* 设置导航链接的字体大小 */
+				color: #C493FF; /* 设置字体颜色，可以根据需要更改 */
+			}
+			.nav::before {
+				content: ""; /* 伪元素的内容为空 */
+				position: absolute; /* 绝对定位 */
+				top: 50%; /* 距离父元素顶部 50% */
+				left: 50%; /* 距离父元素左边 50% */
+				transform: translate(-50%, -50%); /* 使其中心对齐 */
+				width: 10%; /* 宽度为父元素的 100% */
+				height: 140%; /* 高度为父元素的 100% */
+				background-color: #FEFEDF; /* 背景颜色为 #FF5733，可以替换为所需颜色 */
+				z-index: -1; /* 确保伪元素在 nav 元素后面 */
+			}
+			.nav ul {
+				display: inline-block; /* 使 ul 本身成为内联块元素 */
+				padding: 0; /* 移除默认的内边距 */
+				margin: 0; /* 移除默认的外边距 */
+			}
+		</style>
+	</head>
+	<body>
+			<div class="log">
+				<img src="static/nobg_logo.png">
+				<p>赛道：广和通5G AIoT<br>@我来结束这个乐队</p>
+			</div>
+			<div class="nav">
+				<ul>
+					<li>
+						<a href="/students">考生端</a>
+					</li>
+					<li>
+						<a href="/teacher">教师端</a>
+					</li>
+				</ul>
+			</div>
+			<div class="banner">
+				<img src="static/ima3.jpg">
+			</div>
+	</body>
+</html>

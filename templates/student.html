@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <title>考生端</title>
+		<link rel="stylesheet"type="text/css"href="css/style.css"/>
+		<script>  
+		// 获取数字时钟元素
+        var clock = document.querySelector(".digitalClock");  
+		// 更新时钟函数
+        function updateClock() {  
+            var now = new Date();  
+            var second = now.getSeconds().toString().padStart(2, '0');  
+            var minute = now.getMinutes().toString().padStart(2, '0');  
+            var hour = now.getHours().toString().padStart(2, '0');  
+            var date = now.getDate().toString().padStart(2, '0');  
+            var month = (now.getMonth() + 1).toString().padStart(2, '0'); // 月份从0开始计数  
+            var year = now.getFullYear();  
+			// 设置时钟内容
+            clock.innerHTML = "<h1>北京时间:<br>" + year + "年" + month + "月" + date + "日<br>" + hour + "时" + minute + "分" + second + "秒</h1>";  
+        } 
+  
+        function showStartTime() {
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = (now.getMonth() + 1).toString().padStart(2, '0');
+            var date = now.getDate().toString().padStart(2, '0');
+            var hour = now.getHours().toString().padStart(2, '0');
+            var minute = now.getMinutes().toString().padStart(2, '0');
+            var second = now.getSeconds().toString().padStart(2, '0');
+
+            var formattedTime = `${year}年${month}月${date}日 ${hour}时${minute}分${second}秒`; // 完整的时间格式
+            var startTimeInput = document.querySelector('tr:nth-child(2) .model2'); // 获取“考试开始时间”的输入框
+            startTimeInput.value = formattedTime; // 将当前时间设置为输入框的值
+        }
+  
+        setInterval(updateClock, 1000);  
+  
+		function callPythonFunction() {
+            // 获取考试选择的考次，对应不同的指导老师
+            var selectedValue = document.querySelector('.model2').value;
+            // 创建要传递的数据对象
+            var dataToSend = {
+                selected_value: selectedValue
+            };
+            fetch('/call_python_function', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dataToSend) // 传递给Python函数的数据
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert('您的考试已经开始！');
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {  
+            // 为“考试开始”按钮添加点击事件监听器  
+            document.querySelector('.model3').addEventListener('click', showStartTime);
+			// 为“考试开始”按钮添加点击事件监听器
+            document.querySelector('.model3').addEventListener('click', callPythonFunction);  
+        });  
+    </script>
+		<style>
+			body {
+            	margin: 0;
+            	padding: 0;
+            	font-family: Arial, sans-serif;
+        	}
+        	.digitalClock {
+            	text-align: center;
+            	font-size: 24px;
+           	 	margin: 20px 0;
+        	}
+        	.head {
+            	display: flex; /* 使用 flexbox 布局 */
+            	align-items: center; /* 竖直居中对齐子元素 */
+            	justify-content: center; /* 水平居中对齐子元素 */
+            	position: relative;
+        	}
+        	.logo {
+            	display: flex;
+            	flex-direction: column;
+            	align-items: center; /* 居中对齐子元素 */
+            	margin-right: 20px; /* 与右侧元素的间距 */
+        	}
+        	.logo img {
+            	width: 600px; /* 图片宽度 */
+        	}
+        	#center {
+            	display: flex;
+            	flex-direction: column;
+            	justify-content: center; /* 竖直方向居中对齐内容 */
+        	}
+        	form {
+            	margin: 0;
+        	}
+        	table {
+            	width: 100%; /* 表格宽度占满容器 */
+            	border-collapse: collapse; /* 去掉表格边框间隙 */
+        	}
+        	td {
+            	padding: 10px; /* 单元格内边距 */
+            	vertical-align: middle; /* 垂直对齐内容 */
+            	display: flex;
+            	align-items: center; /* 竖直方向居中对齐单元格内容 */
+        	}
+        	.model1 {
+            	font-weight: bold; /* 加粗字体 */
+        	}
+        	.model2 {
+				width: 300px; /* 设置宽度 */
+            	height: 40px; /* 设置高度 */
+				border: 1px solid gray;
+            	box-sizing: border-box; /* 包括内边距和边框在内 */
+            	padding: 5px; /* 内边距 */
+        	}
+        	.model3 {
+            	width: auto; /* 按钮宽度自适应内容 */
+            	margin-left: 10px; /* 按钮与输入框之间的间距 */
+        	}
+		</style>
+	</head>
+	<body>
+	    <div class="digitalClock"></div>
+		<div class="head">
+			<div class="logo">
+				<img src="\static\ima5.jpg" width="600" height="430">
+				<h4>诚信考试</h4>
+			</div>
+			<div id="center">
+				<form>
+					<table>
+						<tr>
+							<td class="model1">考次号</td>
+							<td>
+								<select class="model2">
+									<option value="" disabled selected>请选择</option>
+									<option value="1">考次1-第1教学楼210室</option>
+									<option value="2">考次2-第1教学楼520室</option>
+									<option value="3">考次3-第4教学楼999室</option>
+								</select>
+							</td>
+							<td>
+								<input class="model3" type="button" value="考试开始"/>
+							</td>
+						</tr>
+						<tr>
+							<td class="model1">考试开始时间</td>
+							<td>
+								<input class="model2" type="text" />
+							</td>
+						</tr>
+						<tr>
+							<td class="model1">考试结束时间</td>
+							<td>
+								<input class="model2" type="text" />
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
